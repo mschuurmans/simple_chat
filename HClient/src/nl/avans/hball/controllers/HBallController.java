@@ -32,22 +32,23 @@ public class HBallController
 				char[] chars = "wasd".toCharArray();
 				char keyChar = key;
 				
+				float f = 40f;
+				
 				if (keyChar == chars[0])
 				{
-					
+					_model.movePlayer(new Integer(1), new Vector2f(0, -f));	
 				}
 				else if (keyChar == chars[1])
 				{
-					System.out.println("a Released");
-					_model.movePlayer(new Integer(1), new Vector2f(1000f, 0));	
+					_model.movePlayer(new Integer(1), new Vector2f(-f, 0));	
 				}
 				else if (keyChar == chars[2])
 				{
-					
+					_model.movePlayer(new Integer(1), new Vector2f(0, f));	
 				}
 				else if (keyChar == chars[3])
 				{
-					
+					_model.movePlayer(new Integer(1), new Vector2f(f, 0));	
 				}
 				else if (keyChar == chars[4])
 				{
@@ -55,5 +56,6 @@ public class HBallController
 				}
 			}
 		});
+		_view.addKeyListener(InputController.Instance());
 	}
 }

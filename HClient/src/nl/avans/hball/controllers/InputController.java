@@ -24,7 +24,8 @@ public class InputController implements KeyListener
 	
 	public void setInputTriggeredEventListener(InputTriggeredEventListener listener)
 	{
-		_listener = listener;
+		_listener = listener; 
+		System.out.println("ADDED: " + _listener);
 	}
 	
 	@Override
