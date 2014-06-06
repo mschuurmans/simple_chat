@@ -1,5 +1,7 @@
 package nl.avans.hball.views;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -27,6 +29,7 @@ public class HBallScreen extends JPanel implements ActionListener
 	private Body _floor, _wall;
 	
 	private List<PlayerPosition> _playerPositions = new ArrayList<PlayerPosition>();
+	private boolean[] _playerIsKicking = new boolean[HBallModel.MAXPLAYERS];
 	private ROVector2f _ballPosition;
 	
 	private Timer _timer;
@@ -45,6 +48,7 @@ public class HBallScreen extends JPanel implements ActionListener
 	{
 		_playerPositions = _model.getPlayerPositionList();
 		_ballPosition = _model.getBallPosition();
+		_playerIsKicking = _model.getKickingPlayers();
 		
 		this._floor = _model.getFloor();
 		this._wall = _model.getWall();
@@ -81,11 +85,22 @@ public class HBallScreen extends JPanel implements ActionListener
 		
 		for (PlayerPosition v : _playerPositions)
 		{
+			int i = _playerPositions.indexOf(v);
+			
+			if(_playerIsKicking[i])
+			{
+				g.setStroke(new BasicStroke(3));
+				g.setColor(Color.white);
+			}
+
 			diameter = (int) HBallModel.PLAYERDIAMETER;
 			diameter *= 2;
 			x = (int) v.getX() -diameter/2;
 			y = (int) v.getY() -diameter/2;
 			g.drawOval(x, y, diameter, diameter);
+			
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.black);
 		}
 		
 		diameter = (int) HBallModel.BALLDIAMETER;

@@ -30,23 +30,24 @@ public class InputController implements KeyListener
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if(_listener != null)
-			_listener.buttonPressed(e.getKeyChar());
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e)
+	{
+		char c = e.getKeyChar();
+		
+			if(_listener != null)
+			_listener.buttonPressed(c);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{	
 		char c = e.getKeyChar();
-		System.out.println(c);
 		
 		if(_listener != null)
-			_listener.buttonPressed(c);
+			_listener.buttonReleased(c);
 	}
 
 }

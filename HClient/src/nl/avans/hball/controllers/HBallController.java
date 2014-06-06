@@ -15,6 +15,10 @@ public class HBallController
 	
 	private Timer _timerModelUpdate;
 	
+	float keyForce = 60f;
+	
+	private boolean[] wasdStatus = new boolean[4];
+	
 	public HBallController(HBallModel model, HBallScreen view)
 	{
 		this._model = model;
@@ -29,33 +33,76 @@ public class HBallController
 			@Override
 			public void buttonPressed(char key) 
 			{
+				if(key == ' ')
+				{
+					_model.ballKick(HBallModel.PLAYERTESTID);
+				}
+				
+				//check and set the keys
 				char[] chars = "wasd".toCharArray();
-				char keyChar = key;
+				for(int i = 0; i < 4; i++)
+				{
+					if(chars[i] == key)
+					{
+						wasdStatus[i] = true;
+					}
+				}
 				
-				float f = 40f;
+				//update the vector that moves the player
+				float vertical = 0;
+				float horizontal = 0;
 				
-				if (keyChar == chars[0])
+				if (wasdStatus[0])
 				{
-					_model.movePlayer(new Integer(1), new Vector2f(0, -f));	
+					vertical += -keyForce;
 				}
-				else if (keyChar == chars[1])
+				
+				if (wasdStatus[1])
 				{
-					_model.movePlayer(new Integer(1), new Vector2f(-f, 0));	
+					horizontal += -keyForce;
 				}
-				else if (keyChar == chars[2])
+				
+				if (wasdStatus[2])
 				{
-					_model.movePlayer(new Integer(1), new Vector2f(0, f));	
+					vertical += keyForce;
 				}
-				else if (keyChar == chars[3])
+				
+				if (wasdStatus[3])
 				{
-					_model.movePlayer(new Integer(1), new Vector2f(f, 0));	
+					horizontal += keyForce;
 				}
-				else if (keyChar == chars[4])
+				
+				if(movementKeyIsDown())
+					_model.movePlayer(new Integer(HBallModel.PLAYERTESTID), new Vector2f(horizontal, vertical));	
+			}
+
+			@Override
+			public void buttonReleased(char key) 
+			{
+				char[] chars = "wasd".toCharArray();
+				
+				for(int i = 0; i < 4; i++)
 				{
-					
-				}
+					if(chars[i] == key)
+					{
+						wasdStatus[i] = false;
+					}
+				}	
 			}
 		});
 		_view.addKeyListener(InputController.Instance());
+	}
+	
+	private boolean movementKeyIsDown()
+	{
+		boolean result = false;
+		
+		for (int i = 0; i < wasdStatus.length; i++)
+		{
+			if(wasdStatus[i] == true)
+				result = true;
+		}
+		
+		return result;
 	}
 }
