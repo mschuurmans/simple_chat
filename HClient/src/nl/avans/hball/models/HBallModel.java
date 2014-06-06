@@ -48,9 +48,11 @@ public class HBallModel implements ActionListener
 		
 		_floor = new StaticBody("Ground", new Box(1400f, 1f));
 		_floor.setPosition(0, 600);
+		_floor.setRestitution(1f);
 		
 		_wall = new StaticBody("wall", new Box(1f, 200f));
 		_wall.setPosition(200,400);
+		_wall.setRestitution(1f);
 		
 		_ball = createBall();
 		
@@ -80,6 +82,7 @@ public class HBallModel implements ActionListener
 		
 		ball = new Body("ball", new Circle(BALLDIAMETER), BALLMASS);
 		ball.setPosition(BaseFrame.SCREENWIDTH/2, BaseFrame.SCREENHEIGHT/2);
+		ball.setRestitution(1f);
 		ball.setDamping(100f);
 		
 		return ball;
