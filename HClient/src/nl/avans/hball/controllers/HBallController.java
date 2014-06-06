@@ -23,18 +23,35 @@ public class HBallController
 		_timerModelUpdate = new Timer(60, _model);
 		_timerModelUpdate.start();
 		
+		System.out.println("method call");
 		InputController.Instance().setInputTriggeredEventListener(new InputTriggeredEventListener()
 		{	
 			@Override
-			public void buttonPressed(GameKeys key) 
+			public void buttonPressed(char key) 
 			{
-				System.out.println("BUTTON PRESSED!!!!!!!!!!!!!!!!!!!!");
-				//TODO handle key ofc.
+				char[] chars = "wasd".toCharArray();
+				char keyChar = key;
 				
-				if(key == GameKeys.KeyA)
+				if (keyChar == chars[0])
 				{
-					System.out.println("IT WORKS!!!!!!!!!!!!!!");
-					_model.movePlayer(new Integer(10), new Vector2f(10, 0));
+					
+				}
+				else if (keyChar == chars[1])
+				{
+					System.out.println("a Released");
+					_model.movePlayer(new Integer(1), new Vector2f(1000f, 0));	
+				}
+				else if (keyChar == chars[2])
+				{
+					
+				}
+				else if (keyChar == chars[3])
+				{
+					
+				}
+				else if (keyChar == chars[4])
+				{
+					
 				}
 			}
 		});

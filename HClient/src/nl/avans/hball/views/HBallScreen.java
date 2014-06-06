@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import net.phys2d.math.ROVector2f;
+import nl.avans.hball.controllers.InputController;
 import nl.avans.hball.entities.PlayerPosition;
 import nl.avans.hball.models.HBallModel;
 
@@ -29,6 +30,7 @@ public class HBallScreen extends JPanel implements ActionListener
 	{
 		this._model = model;
 		
+		this.addKeyListener(new InputController());
 		this.setFocusable(true);
 		_timer = new Timer(60, this);
 		_timer.start(); 
