@@ -22,14 +22,20 @@ public class HBallModel implements ActionListener
 	
 	public static final int MAXPLAYERS = 10;
 	
-	public static final float PLAYERDIAMETER = 15f;
-	public static final float BALLDIAMETER = 5f;
+	public static final float PLAYERDIAMETER = 30f;
+	public static final float BALLDIAMETER = 15f;
 	public static final float BALLMASS = 1000f;
 	
 	public static final int PLAYERTESTID = 0;
 	
+	public static final float FIELDWIDTH = 1000;
+	public static final float FIELDHEIGHT = 500;
+	
+	public static final int AMOUNTOFWALLS = 50;
+	
 	private World _myWorld;
-	private Body _floor, _wall;
+	private Body _floor;
+	private Body[] _wall = new Body[AMOUNTOFWALLS];
 	private List<Body> _playerList = new ArrayList<Body>();
 	private boolean[] _playerIsKicking = new boolean[MAXPLAYERS];
 	
@@ -48,11 +54,14 @@ public class HBallModel implements ActionListener
 		
 		_floor = new StaticBody("Ground", new Box(1400f, 1f));
 		_floor.setPosition(0, 600);
-		_floor.setRestitution(1f);
+		_floor.setRestitution(0.8f);
 		
-		_wall = new StaticBody("wall", new Box(1f, 200f));
-		_wall.setPosition(200,400);
-		_wall.setRestitution(1f);
+		for (int i = 0; i < AMOUNTOFWALLS; i++)
+		{
+			_wall[i] = new StaticBody("wall", new Box(FIELDWIDTH, FIELDHEIGHT));
+			_wall[i].setPosition(400 + i + FIELDWIDTH/2f,250 + i + FIELDHEIGHT/2f);
+			_wall[i].setRestitution(0.8f);
+		}
 		
 		_ball = createBall();
 		
@@ -61,12 +70,16 @@ public class HBallModel implements ActionListener
 		Body player1 = new Body("LocalPlayer", new Circle(PLAYERDIAMETER), 1000f);
 		player1.setUserData(new Integer(PLAYERTESTID));
 		player1.setPosition(BaseFrame.SCREENWIDTH/8, BaseFrame.SCREENHEIGHT/2);
+		player1.setPosition(BaseFrame.SCREENWIDTH/2, BaseFrame.SCREENHEIGHT/2);
 		player1.setDamping(200f);
 		
 		_playerList.add(player1);
 		
+		for (int i = 0; i < AMOUNTOFWALLS; i++)
+		{
+			_myWorld.add(_wall[i]);
+		}
 		_myWorld.add(_floor);
-		_myWorld.add(_wall);
 		_myWorld.add(_ball);
 		for(Body body : _playerList)
 		{
@@ -82,7 +95,7 @@ public class HBallModel implements ActionListener
 		
 		ball = new Body("ball", new Circle(BALLDIAMETER), BALLMASS);
 		ball.setPosition(BaseFrame.SCREENWIDTH/2, BaseFrame.SCREENHEIGHT/2);
-		ball.setRestitution(1f);
+		ball.setRestitution(0.9f);
 		ball.setDamping(100f);
 		
 		return ball;
@@ -140,7 +153,7 @@ public class HBallModel implements ActionListener
 		return this._floor;
 	}
 	
-	public Body getWall()
+	public Body[] getWall()
 	{
 		return this._wall;
 	}
@@ -173,7 +186,7 @@ public class HBallModel implements ActionListener
 				float x = body.getPosition().getX();
 				float y = body.getPosition().getY();
 				//create a new heavy body that is slightly larger. this way the engine can determine where the ball should move
-				Body newBody = new Body(new Circle(PLAYERDIAMETER *2), 1000000f);
+				Body newBody = new Body(new Circle((float) (PLAYERDIAMETER *1.5)), 1000000f);
 				//remove the old body to replace it with the heavy newer one
 				_myWorld.remove(body);
 				newBody.setPosition(x, y);// set new heavy body to location of the old one
@@ -192,14 +205,11 @@ public class HBallModel implements ActionListener
 				
 				float deltaX =  ballPlacementPosition.getX() - _ball.getPosition().getX();
 				float deltaY = ballPlacementPosition.getY() - _ball.getPosition().getY();
-				float forceMagnifier = 100f;
-				
-				Vector2f ballVector = new Vector2f(deltaX * forceMagnifier, deltaY * forceMagnifier);
-				_ball.adjustVelocity(ballVector);
+				float forceMagnifier = 200f;
 				
 				// situation now is restored to where it was but we have the ballPlacementPosition. now we need a vector to adjust the ballVelocity towards that point.
-
-				System.out.println("ballkicked");
+				Vector2f ballVector = new Vector2f(deltaX * forceMagnifier, deltaY * forceMagnifier);
+				_ball.adjustVelocity(ballVector);
 			}
 		}
 	}

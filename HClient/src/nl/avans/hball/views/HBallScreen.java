@@ -26,7 +26,8 @@ public class HBallScreen extends JPanel implements ActionListener
 	
 	private HBallModel _model;
 	
-	private Body _floor, _wall;
+	private Body _floor;
+	private Body[] _wall;
 	
 	private List<PlayerPosition> _playerPositions = new ArrayList<PlayerPosition>();
 	private boolean[] _playerIsKicking = new boolean[HBallModel.MAXPLAYERS];
@@ -37,6 +38,7 @@ public class HBallScreen extends JPanel implements ActionListener
 	public HBallScreen(HBallModel model)
 	{
 		this._model = model;
+		this.setBackground(Color.green.darker().darker());
 		
 		this.setFocusable(true);
 		_timer = new Timer(60, this);
@@ -79,7 +81,10 @@ public class HBallScreen extends JPanel implements ActionListener
 		Graphics2D g = (Graphics2D)g1;
 		
 		drawBox(g, _floor);
-		drawBox(g, _wall);
+		for(int i = 0; i < _wall.length; i++)
+		{
+			drawBox(g, _wall[i]);	
+		}
 		
 		int x, y, diameter;
 		

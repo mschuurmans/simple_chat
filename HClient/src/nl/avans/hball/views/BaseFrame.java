@@ -9,8 +9,8 @@ public class BaseFrame extends JFrame
 {
 	private static final long serialVersionUID = 8364197030531992052L;
 	
-	public static final int SCREENWIDTH = 800;
-	public static final int SCREENHEIGHT = 600;
+	public static final int SCREENWIDTH = 1920;
+	public static final int SCREENHEIGHT = 1080;
 
 	public BaseFrame(JPanel panel)
 	{
