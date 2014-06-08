@@ -1,6 +1,8 @@
 package nl.avans.hball.server;
 
+import nl.avans.hball.server.models.HBallModel;
 import nl.avans.hball.server.network.NetworkController;
+import nl.avans.hball.server.network.handlers.ObjectHandler;
 
 public class Main 
 {
@@ -8,6 +10,13 @@ public class Main
 	
 	public static void main(String[] args)
 	{
+		HBallModel model = new HBallModel();
+		ObjectHandler objectHandler = new ObjectHandler();
+		objectHandler.setModel(model);
+		
+
+//		HBallController controller = new HBallController(model);
+		
 		NetworkController network = new NetworkController(PORT);
 		network.start();
 	}
