@@ -41,7 +41,7 @@ public class HBallController implements ActionListener
 			{
 				if(key == ' ')
 				{
-					_model.ballKick(HBallModel.PLAYERTESTID);
+//					_model.ballKick(HBallModel.PLAYERTESTID);
 				}
 				
 				//check and set the keys
@@ -98,8 +98,8 @@ public class HBallController implements ActionListener
 			horizontal += keyForce;
 		}
 		
-		if(movementKeyIsDown())
-			_model.movePlayer(new Integer(HBallModel.PLAYERTESTID), new Vector2f(horizontal, vertical));	
+//		if(movementKeyIsDown())
+//			_model.movePlayer(new Integer(HBallModel.PLAYERTESTID), new Vector2f(horizontal, vertical));	
 	}
 	
 	private boolean movementKeyIsDown()

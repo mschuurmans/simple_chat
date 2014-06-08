@@ -26,11 +26,7 @@ public class HBallScreen extends JPanel implements ActionListener
 	
 	private HBallModel _model;
 	
-	private Body _floor;
-	private Body[] _wall;
-	
 	private List<PlayerPosition> _playerPositions = new ArrayList<PlayerPosition>();
-	private boolean[] _playerIsKicking = new boolean[HBallModel.MAXPLAYERS];
 	private ROVector2f _ballPosition;
 	
 	private Timer _timer;
@@ -50,10 +46,6 @@ public class HBallScreen extends JPanel implements ActionListener
 	{
 		_playerPositions = _model.getPlayerPositionList();
 		_ballPosition = _model.getBallPosition();
-		_playerIsKicking = _model.getKickingPlayers();
-		
-		this._floor = _model.getFloor();
-		this._wall = _model.getWall();
 		
 		repaint();
 	}
@@ -80,23 +72,17 @@ public class HBallScreen extends JPanel implements ActionListener
 		super.paintComponent(g1);
 		Graphics2D g = (Graphics2D)g1;
 		
-		drawBox(g, _floor);
-		for(int i = 0; i < _wall.length; i++)
-		{
-			drawBox(g, _wall[i]);	
-		}
-		
 		int x, y, diameter;
 		
 		for (PlayerPosition v : _playerPositions)
 		{
-			int i = _playerPositions.indexOf(v);
-			
-			if(_playerIsKicking[i])
-			{
-				g.setStroke(new BasicStroke(3));
-				g.setColor(Color.white);
-			}
+//			int i = _playerPositions.indexOf(v);
+//			
+//			if(_playerIsKicking[i])
+//			{
+//				g.setStroke(new BasicStroke(3));
+//				g.setColor(Color.white);
+//			}
 
 			diameter = (int) HBallModel.PLAYERDIAMETER;
 			diameter *= 2;

@@ -1,8 +1,10 @@
 
 package nl.avans.hball.entities;
 
+import java.io.Serializable;
 
-public class PlayerPosition implements Comparable<Integer>
+
+public class PlayerPosition implements Comparable<Integer>, Serializable
 {
 	private int _id;
 	private float _x;
