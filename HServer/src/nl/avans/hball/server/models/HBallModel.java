@@ -36,7 +36,6 @@ public class HBallModel implements ActionListener, Cloneable
 	private Body _floor;
 	private Body[] _wall = new Body[AMOUNTOFWALLS];
 	private List<Body> _playerList = new ArrayList<Body>();
-	private boolean[] _playerIsKicking = new boolean[MAXPLAYERS];
 	
 	private Body _ball;
 	
@@ -102,26 +101,11 @@ public class HBallModel implements ActionListener, Cloneable
 		{
 			_myWorld.step();
 		}
-		
-		for (int i = 0; i < 10; i++)
-		{
-			//reset the array
-			if(i == 9)
-			{
-				_playerIsKicking = new boolean[MAXPLAYERS];
-			}
-		}
-		
 	}
 	
 	public List<Body> getPlayerList()
 	{
 		return this._playerList;
-	}
-	
-	public boolean[] getKickingPlayers()
-	{
-		return this._playerIsKicking;
 	}
 	
 	public List<PlayerPosition> getPlayerPositionList()
@@ -179,9 +163,7 @@ public class HBallModel implements ActionListener, Cloneable
 		for(Body body : _playerList)
 		{
 			if( playerId == (int)body.getUserData() )
-			{
-				_playerIsKicking[playerId] = true;
-				
+			{				
 				if(body.getPosition().distance(_ball.getPosition()) > 100) // if the ball is not near.. return operation
 						return;
 				

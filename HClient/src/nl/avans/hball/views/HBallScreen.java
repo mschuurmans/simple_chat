@@ -77,13 +77,14 @@ public class HBallScreen extends JPanel implements ActionListener
 		
 		for (PlayerPosition v : _playerPositions)
 		{
-//			int i = _playerPositions.indexOf(v);
-//			
-//			if(_playerIsKicking[i])
-//			{
-//				g.setStroke(new BasicStroke(3));
-//				g.setColor(Color.white);
-//			}
+			int i = _playerPositions.indexOf(v);
+			
+			
+			if(i == _model.getClientId() && _model.getKicking() )
+			{
+				g.setStroke(new BasicStroke(3));
+				g.setColor(Color.white);
+			}
 
 			diameter = (int) HBallModel.PLAYERDIAMETER;
 			diameter *= 2;

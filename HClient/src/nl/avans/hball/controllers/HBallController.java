@@ -51,25 +51,10 @@ public class HBallController implements ActionListener
 				if(key == ' ')
 				{
 					NetworkQueueController.Instance().add( new SendKickPackage(id) );
-				}
-				else if(key == 'w')
-				{
-					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Up));
-				}
-				else if(key == 'a')
-				{
-					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Left));
-				}
-				else if(key == 's')
-				{
-					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Down));
-				}
-				else if(key == 'd')
-				{
-					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Right));
+					_model.setKicking(true);
 				}
 				
-				//check and set the keys
+				//check and set the movement Keys
 				char[] chars = "wasd".toCharArray();
 				for(int i = 0; i < 4; i++)
 				{
@@ -114,32 +99,27 @@ public class HBallController implements ActionListener
 	
 	private void driveModel()
 	{
-		//update the vector that moves the player
-		float vertical = 0;
-		float horizontal = 0;
+		int id = _model.getClientId();
 		
 		if (wasdStatus[0])
 		{
-			vertical += -keyForce;
+			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Up));
 		}
 		
 		if (wasdStatus[1])
 		{
-			horizontal += -keyForce;
+			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Left));
 		}
 		
 		if (wasdStatus[2])
 		{
-			vertical += keyForce;
+			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Down));
 		}
 		
 		if (wasdStatus[3])
 		{
-			horizontal += keyForce;
-		}
-		
-//		if(movementKeyIsDown())
-//			_model.movePlayer(new Integer(HBallModel.PLAYERTESTID), new Vector2f(horizontal, vertical));	
+			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Right));
+		}	
 	}
 	
 	private boolean movementKeyIsDown()

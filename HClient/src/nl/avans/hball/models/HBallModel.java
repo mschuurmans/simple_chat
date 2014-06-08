@@ -16,6 +16,8 @@ public class HBallModel implements ActionListener
 	public static final float PLAYERDIAMETER = 30f;
 	public static final float BALLDIAMETER = 15f;
 	
+	private boolean _localPlayerKicking;
+	
 	private int _clientId;
 	
 	private List<PlayerPosition> _playerPositionList = new ArrayList<PlayerPosition>();
@@ -34,7 +36,17 @@ public class HBallModel implements ActionListener
 	
 	public void update()
 	{
-		
+		this._localPlayerKicking = false;
+	}
+	
+	public void setKicking(boolean bool)
+	{
+		this._localPlayerKicking = bool;
+	}
+	
+	public boolean getKicking()
+	{
+		return this._localPlayerKicking;
 	}
 	
 	public List<PlayerPosition> getPlayerPositionList()
