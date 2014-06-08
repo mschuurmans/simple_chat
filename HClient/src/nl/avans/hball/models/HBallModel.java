@@ -57,9 +57,11 @@ public class HBallModel implements ActionListener
 		return _ballPosition;
 	}
 	
-	public void setBallPosition(ROVector2f bp)
+	public void setBallPosition(float x, float y)
 	{
-		this._ballPosition = bp;
+		ROVector2f pos = new Vector2f(x, y);
+		this._ballPosition = pos;
+		System.out.println(pos.getX() + pos.getY());
 	}
 	
 	

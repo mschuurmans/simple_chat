@@ -39,6 +39,7 @@ public class CommHandler implements Runnable
 				System.out.println("step 3");
 
 				HBallModel model = ObjectHandler.Instance().getModel();
+				model.playerHasJoined();
 				
 				System.out.println("step 4");
 				
@@ -46,7 +47,10 @@ public class CommHandler implements Runnable
 				{
 						
 					if(model.getBallPosition() != null)
+					{
+//						System.out.println(model.getBallPosition());
 						outputTOClient.writeObject(model.getBallPosition());
+					}
 					
 					if(model.getPlayerPositionList() != null)
 						outputTOClient.writeObject(model.getPlayerPositionList());

@@ -7,7 +7,7 @@ public class ObjectHandler
 	
 	private static ObjectHandler _instance = null;
 	
-	private HBallModel _model;
+	private static HBallModel _model;
 
 	public static ObjectHandler Instance()
 	{

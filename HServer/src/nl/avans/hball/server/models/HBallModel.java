@@ -89,8 +89,6 @@ public class HBallModel implements ActionListener, Cloneable
 		{
 			_myWorld.add(body);
 		}
-		
-		movePlayer(1, new Vector2f(2000f, 20));
 	}
 	
 	private Body createBall()
@@ -116,8 +114,11 @@ public class HBallModel implements ActionListener, Cloneable
 		{
 			//reset the array
 			if(i == 9)
+			{
 				_playerIsKicking = new boolean[MAXPLAYERS];
+			}
 		}
+		
 	}
 	
 	public List<Body> getPlayerList()
@@ -142,9 +143,10 @@ public class HBallModel implements ActionListener, Cloneable
 		return result;
 	}
 	
-	public ROVector2f getBallPosition()
+	public PlayerPosition getBallPosition()
 	{
-		return _ball.getPosition();
+		ROVector2f pos = _ball.getPosition();
+		return new PlayerPosition(-1, pos.getX(), pos.getY());
 	}
 	
 	public Body getBall()
@@ -160,6 +162,11 @@ public class HBallModel implements ActionListener, Cloneable
 	public Body[] getWall()
 	{
 		return this._wall;
+	}
+	
+	public void playerHasJoined()
+	{
+		_ball.adjustVelocity(new Vector2f(2000f, 2000f));
 	}
 	
 	public void movePlayer(int playerId, Vector2f delta)

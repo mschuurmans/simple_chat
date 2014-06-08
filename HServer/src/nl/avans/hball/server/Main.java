@@ -3,6 +3,7 @@ package nl.avans.hball.server;
 import nl.avans.hball.server.models.HBallModel;
 import nl.avans.hball.server.network.NetworkController;
 import nl.avans.hball.server.network.handlers.ObjectHandler;
+import nl.avans.server.controllers.HBallController;
 
 public class Main 
 {
@@ -12,6 +13,7 @@ public class Main
 	{
 		HBallModel model = new HBallModel();
 		ObjectHandler objectHandler = new ObjectHandler();
+		HBallController controller = new HBallController(model);
 		objectHandler.setModel(model);
 		
 

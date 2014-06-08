@@ -64,9 +64,11 @@ public class NetworkController
 					
 					if(obj != null)
 					{
-						if(obj instanceof ROVector2f)
+						if(obj instanceof PlayerPosition)
 						{
-							model.setBallPosition((ROVector2f)obj);
+							float x = ((PlayerPosition) obj).getX();
+							float y = ((PlayerPosition) obj).getY();
+							model.setBallPosition(x, y);
 						}
 						else if(obj instanceof List<?>)
 						{
