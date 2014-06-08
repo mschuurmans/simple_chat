@@ -2,14 +2,13 @@ package nl.avans.hball.controllers;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.phys2d.math.ROVector2f;
-import nl.avans.hball.entities.PlayerPosition;
-import nl.avans.hball.models.HBallModel;
+import nl.avans.hball.networklib.HPackage;
+import nl.avans.hball.networklib.PingPackage;
+import nl.avans.hball.networklib.PositionsPackage;
 
 public class NetworkController 
 {
@@ -52,32 +51,26 @@ public class NetworkController
 			System.out.println("RUN IN CONNECTION CALLED");
 			try
 			{
-				ObjectInputStream objectIn = new ObjectInputStream(	_socket.getInputStream());
-				
-				Object obj = objectIn.readObject();
-				
-				HBallModel model = ObjectHandler.Instance().getModel();
-				
 				while(this._running)
 				{
-
+					ObjectOutputStream out = new ObjectOutputStream(_socket.getOutputStream());
 					
-					if(obj != null)
+					HPackage packOut = new PingPackage();
+					
+					if(NetworkQueueController.Instance().available())
+						packOut = NetworkQueueController.Instance().getNext();
+					
+					out.writeObject(packOut);
+					out.flush();
+					
+					ObjectInputStream in = new ObjectInputStream(_socket.getInputStream());
+					HPackage packIn = (HPackage)in.readObject();
+					
+					
+					if(packIn instanceof PositionsPackage)
 					{
-						if(obj instanceof PlayerPosition)
-						{
-							float x = ((PlayerPosition) obj).getX();
-							float y = ((PlayerPosition) obj).getY();
-							model.setBallPosition(x, y);
-						}
-						else if(obj instanceof List<?>)
-						{
-							model.setPlayerPositionList((List<PlayerPosition>)obj );
-						}
-						else
-						{
-							System.err.println("Error. unexpected package received");
-						}
+						PositionsPackage pp = (PositionsPackage)packIn;
+						// TODO do something with the package.
 					}
 				}					
 			}			

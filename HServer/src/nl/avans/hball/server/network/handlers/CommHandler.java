@@ -1,14 +1,11 @@
 package nl.avans.hball.server.network.handlers;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import nl.avans.hball.entities.PlayerPosition;
-import nl.avans.hball.server.models.HBallModel;
+import nl.avans.hball.networklib.HPackage;
+import nl.avans.hball.networklib.PositionsPackage;
 
 public class CommHandler implements Runnable
 {
@@ -22,45 +19,24 @@ public class CommHandler implements Runnable
 		@Override
 		public void run()
 		{
-			try
+			while(true)
 			{
-//				System.out.println("step 1");
-//				
-//				DataInputStream inStream = new DataInputStream(_socket.getInputStream());
-//				ObjectInputStream inputFromClient = new ObjectInputStream(inStream);
-//				
-
-				System.out.println("step 2");
-				
-				DataOutputStream outStream = new DataOutputStream(_socket.getOutputStream());
-				ObjectOutputStream outputTOClient = new ObjectOutputStream(outStream);
-				
-
-				System.out.println("step 3");
-
-				HBallModel model = ObjectHandler.Instance().getModel();
-				model.playerHasJoined();
-				
-				System.out.println("step 4");
-				
-				while(true)
+				try
 				{
-						
-					if(model.getBallPosition() != null)
-					{
-//						System.out.println(model.getBallPosition());
-						outputTOClient.writeObject(model.getBallPosition());
-					}
+					ObjectInputStream in = new ObjectInputStream(_socket.getInputStream());
 					
-					if(model.getPlayerPositionList() != null)
-						outputTOClient.writeObject(model.getPlayerPositionList());
+					HPackage packIn = (HPackage)in.readObject();
+					//TODO do something usefull with incomming package.
+					System.out.println("INCOMMING PACKAGE: " + packIn);
+					ObjectOutputStream out = new ObjectOutputStream(_socket.getOutputStream());
+					out.writeObject(new PositionsPackage()); // TODO FILL THIS PACKAGE WITH DATA.
+					out.flush();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
 				}
 			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		
 		}
 		
 }

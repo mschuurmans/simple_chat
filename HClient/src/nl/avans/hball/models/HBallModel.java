@@ -7,14 +7,7 @@ import java.util.List;
 
 import net.phys2d.math.ROVector2f;
 import net.phys2d.math.Vector2f;
-import net.phys2d.raw.Body;
-import net.phys2d.raw.StaticBody;
-import net.phys2d.raw.World;
-import net.phys2d.raw.shapes.Box;
-import net.phys2d.raw.shapes.Circle;
-import net.phys2d.raw.strategies.BruteCollisionStrategy;
 import nl.avans.hball.entities.PlayerPosition;
-import nl.avans.hball.views.BaseFrame;
 
 public class HBallModel implements ActionListener
 {
