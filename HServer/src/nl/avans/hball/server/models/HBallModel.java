@@ -13,7 +13,7 @@ import net.phys2d.raw.World;
 import net.phys2d.raw.shapes.Box;
 import net.phys2d.raw.shapes.Circle;
 import net.phys2d.raw.strategies.BruteCollisionStrategy;
-import nl.avans.hball.entities.PlayerPosition;
+import nl.avans.hball.networklib.PlayerPosition;
 
 public class HBallModel implements ActionListener, Cloneable
 {

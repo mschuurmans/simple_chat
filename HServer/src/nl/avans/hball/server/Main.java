@@ -12,7 +12,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		HBallModel model = new HBallModel();
-		ObjectHandler objectHandler = new ObjectHandler();
+		ObjectHandler objectHandler = ObjectHandler.Instance();
 		HBallController controller = new HBallController(model);
 		objectHandler.setModel(model);
 		

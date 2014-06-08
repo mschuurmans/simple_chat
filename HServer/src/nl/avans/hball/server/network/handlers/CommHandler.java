@@ -4,10 +4,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.List;
 
 import nl.avans.hball.networklib.HPackage;
 import nl.avans.hball.networklib.PingPackage;
+import nl.avans.hball.networklib.PlayerPosition;
 import nl.avans.hball.networklib.PositionsPackage;
+import nl.avans.hball.server.models.HBallModel;
 
 public class CommHandler implements Runnable
 {
@@ -21,6 +24,8 @@ public class CommHandler implements Runnable
 		@Override
 		public void run()
 		{
+			HBallModel model = ObjectHandler.Instance().getModel();
+			
 			while(_run)
 			{
 				try
@@ -33,7 +38,11 @@ public class CommHandler implements Runnable
 						System.out.println("INCOMMING PACKAGE: " + packIn);
 					
 					ObjectOutputStream out = new ObjectOutputStream(_socket.getOutputStream());
-					out.writeObject(new PositionsPackage()); // TODO FILL THIS PACKAGE WITH DATA.
+					
+					PlayerPosition ballPos = model.getBallPosition();
+					List<PlayerPosition> playerPosList = model.getPlayerPositionList();
+					
+					out.writeObject(new PositionsPackage(ballPos, playerPosList)); // TODO FILL THIS PACKAGE WITH DATA.
 					out.flush();
 				}
 				catch(SocketException e)
