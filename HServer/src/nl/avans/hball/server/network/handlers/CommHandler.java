@@ -21,16 +21,22 @@ public class CommHandler implements Runnable
 		private int _clientId;
 		private Socket _socket;
 		private boolean _run = true;
+		private HBallModel model;
+		
 		public CommHandler(int id, Socket s)
 		{
+			model= ObjectHandler.Instance().getModel();
+			
 			_clientId = id;
 			_socket = s;
+			
+			model.addNewPlayer();
+
 		}
 		
 		@Override
 		public void run()
 		{
-			HBallModel model = ObjectHandler.Instance().getModel();
 			HBallController controller = ObjectHandler.Instance().get_controller();
 			
 			while(_run)
@@ -49,21 +55,23 @@ public class CommHandler implements Runnable
 						}
 						if(packIn instanceof MovePackage)
 						{
+							int id = ((MovePackage) packIn).getId();
+							
 							if(((MovePackage) packIn).getDirection() == MoveDirections.Up)
 							{
-								controller.enableWasdBool('w');
+								controller.enableWasdBool(id, 'w');
 							}
 							else if(((MovePackage) packIn).getDirection() == MoveDirections.Right)
 							{
-								controller.enableWasdBool('d');
+								controller.enableWasdBool(id, 'd');
 							}
 							else if(((MovePackage) packIn).getDirection() == MoveDirections.Down)
 							{
-								controller.enableWasdBool('s');
+								controller.enableWasdBool(id, 's');
 							}
 							else if(((MovePackage) packIn).getDirection() == MoveDirections.Left)
 							{
-								controller.enableWasdBool('a');
+								controller.enableWasdBool(id, 'a');
 							}
 							
 						}

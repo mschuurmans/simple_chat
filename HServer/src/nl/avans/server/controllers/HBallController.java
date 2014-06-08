@@ -12,11 +12,13 @@ public class HBallController implements ActionListener
 {
 	private HBallModel _model;
 	
+	private static int CLIENTSAMPLE = 20;
+	
 	private Timer _timerModelUpdate, _controllerTimer;
 	
 	float keyForce = 40f;
 	
-	private boolean[] wasdStatus = new boolean[4];
+	private boolean[][] wasdStatus = new boolean[CLIENTSAMPLE][4];
 	
 	public HBallController(HBallModel model)
 	{
@@ -30,54 +32,54 @@ public class HBallController implements ActionListener
 		
 	}
 	
-	public void enableWasdBool(char c)
+	public void enableWasdBool(int clientId, char c)
 	{
 		switch(c)
 		{
-		case 'w': wasdStatus[0] = true; break;
-		case 'a': wasdStatus[1] = true; break;
-		case 's': wasdStatus[2] = true; break;
-		case 'd': wasdStatus[3] = true; break;
+		case 'w': wasdStatus[clientId][0] = true; break;
+		case 'a': wasdStatus[clientId][1] = true; break;
+		case 's': wasdStatus[clientId][2] = true; break;
+		case 'd': wasdStatus[clientId][3] = true; break;
 		}
 	}
 	
-	private void driveModel()
+	private void driveModel(int clientId)
 	{
 		//update the vector that moves the player
 		float vertical = 0;
 		float horizontal = 0;
 		
-		if (wasdStatus[0])
+		if (wasdStatus[clientId][0])
 		{
 			vertical += -keyForce;
 		}
 		
-		if (wasdStatus[1])
+		if (wasdStatus[clientId][1])
 		{
 			horizontal += -keyForce;
 		}
 		
-		if (wasdStatus[2])
+		if (wasdStatus[clientId][2])
 		{
 			vertical += keyForce;
 		}
 		
-		if (wasdStatus[3])
+		if (wasdStatus[clientId][3])
 		{
 			horizontal += keyForce;
 		}
 		
-		if(movementKeyIsDown())
-			_model.movePlayer(new Integer(HBallModel.PLAYERTESTID), new Vector2f(horizontal, vertical));	
+		if(movementKeyIsDown(clientId))
+			_model.movePlayer(clientId, new Vector2f(horizontal, vertical));	
 	}
 	
-	private boolean movementKeyIsDown()
+	private boolean movementKeyIsDown(int clientId)
 	{
 		boolean result = false;
 		
-		for (int i = 0; i < wasdStatus.length; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			if(wasdStatus[i] == true)
+			if(wasdStatus[clientId][i] == true)
 				result = true;
 		}
 		
@@ -87,7 +89,10 @@ public class HBallController implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		driveModel();
-		wasdStatus = new boolean[4];
+		for(int i = 0; i < CLIENTSAMPLE; i++)
+		{
+			driveModel(i);
+		}
+		wasdStatus = new boolean[CLIENTSAMPLE][4];
 	}
 }

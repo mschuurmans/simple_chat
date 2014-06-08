@@ -25,7 +25,7 @@ public class HBallModel implements ActionListener, Cloneable
 	public static final float BALLDIAMETER = 15f;
 	public static final float BALLMASS = 1000f;
 	
-	public static final int PLAYERTESTID = 0;
+	public static final int PLAYERTESTID = 1;
 	
 	public static final float FIELDWIDTH = 1200;
 	public static final float FIELDHEIGHT = 600;
@@ -64,23 +64,12 @@ public class HBallModel implements ActionListener, Cloneable
 		
 		_ball = createBall();
 		
-		Body player1 = new Body("LocalPlayer", new Circle(PLAYERDIAMETER), 1000f);
-		player1.setUserData(new Integer(PLAYERTESTID));
-		player1.setPosition(1200, 380);
-		player1.setDamping(200f);
-		
-		_playerList.add(player1);
-		
 		for (int i = 0; i < AMOUNTOFWALLS; i++)
 		{
 			_myWorld.add(_wall[i]);
 		}
 		_myWorld.add(_floor);
 		_myWorld.add(_ball);
-		for(Body body : _playerList)
-		{
-			_myWorld.add(body);
-		}
 	}
 	
 	private Body createBall()
@@ -93,6 +82,18 @@ public class HBallModel implements ActionListener, Cloneable
 		ball.setDamping(50f);
 		
 		return ball;
+	}
+	
+	public void addNewPlayer()
+	{
+		Body player = new Body("new Player", new Circle(PLAYERDIAMETER), 1000f);
+		int id = _playerList.size();
+		player.setUserData(id);
+		player.setPosition(1200 - 100*id, 380);
+		player.setDamping(200f);
+		
+		_playerList.add(player);
+		_myWorld.add(player);
 	}
 	
 	public void update()

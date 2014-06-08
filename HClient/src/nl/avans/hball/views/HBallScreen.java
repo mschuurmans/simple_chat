@@ -73,6 +73,8 @@ public class HBallScreen extends JPanel implements ActionListener
 		
 		int x, y, diameter;
 		
+		g.drawString("Player ID: " + _model.getClientId(), 30, 30);
+		
 		for (PlayerPosition v : _playerPositions)
 		{
 //			int i = _playerPositions.indexOf(v);
