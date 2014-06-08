@@ -2,7 +2,7 @@ package nl.avans.hball.networklib;
 
 import java.io.Serializable;
 
-import nl.avans.hball.networklib.NetworkEnums.MoveDirections;
+import nl.avans.hball.networklib.EnumsNetwork.MoveDirections;
 
 public class MovePackage extends HPackage implements Serializable
 {

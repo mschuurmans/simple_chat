@@ -9,7 +9,7 @@ import nl.avans.hball.events.InputTriggeredEventListener;
 import nl.avans.hball.events.PackageReceivedEventListener;
 import nl.avans.hball.models.HBallModel;
 import nl.avans.hball.networklib.MovePackage;
-import nl.avans.hball.networklib.NetworkEnums.MoveDirections;
+import nl.avans.hball.networklib.EnumsNetwork.MoveDirections;
 import nl.avans.hball.networklib.PositionsPackage;
 import nl.avans.hball.networklib.SendKickPackage;
 import nl.avans.hball.views.HBallScreen;
