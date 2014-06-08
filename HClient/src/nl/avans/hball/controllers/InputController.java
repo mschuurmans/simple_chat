@@ -36,7 +36,6 @@ public class InputController implements KeyListener
 	public void keyPressed(KeyEvent e)
 	{
 		char c = e.getKeyChar();
-		
 			if(_listener != null)
 			_listener.buttonPressed(c);
 	}

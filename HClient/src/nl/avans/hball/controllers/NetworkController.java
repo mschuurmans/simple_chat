@@ -57,9 +57,12 @@ public class NetworkController
 					
 					HPackage packOut = new PingPackage();
 					
-					if(NetworkQueueController.Instance().available())
+					boolean available = NetworkQueueController.Instance().available();
+					
+					if(available)
 						packOut = NetworkQueueController.Instance().getNext();
 					
+
 					out.writeObject(packOut);
 					out.flush();
 					
@@ -70,7 +73,7 @@ public class NetworkController
 					if(packIn instanceof PositionsPackage)
 					{
 						PositionsPackage pp = (PositionsPackage)packIn;
-						// TODO do something with the package.
+						NetworkQueueController.Instance().callPositionsPackageReceived(pp);
 					}
 				}					
 			}			
