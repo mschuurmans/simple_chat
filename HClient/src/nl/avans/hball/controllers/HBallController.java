@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import net.phys2d.math.Vector2f;
 import nl.avans.hball.events.InputTriggeredEventListener;
+import nl.avans.hball.events.PackageReceivedEventListener;
 import nl.avans.hball.models.HBallModel;
-import nl.avans.hball.utils.Enums.GameKeys;
+import nl.avans.hball.networklib.MovePackage;
+import nl.avans.hball.networklib.NetworkEnums.MoveDirections;
+import nl.avans.hball.networklib.PositionsPackage;
+import nl.avans.hball.networklib.SendKickPackage;
 import nl.avans.hball.views.HBallScreen;
 
 public class HBallController implements ActionListener
@@ -39,9 +42,26 @@ public class HBallController implements ActionListener
 			@Override
 			public void buttonPressed(char key) 
 			{
+				System.out.println("Key: " + key);
 				if(key == ' ')
 				{
-//					_model.ballKick(HBallModel.PLAYERTESTID);
+					NetworkQueueController.Instance().add(new SendKickPackage());
+				}
+				else if(key == 'w')
+				{
+					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Up));
+				}
+				else if(key == 'a')
+				{
+					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Left));
+				}
+				else if(key == 's')
+				{
+					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Down));
+				}
+				else if(key == 'd')
+				{
+					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Right));
 				}
 				
 				//check and set the keys
@@ -69,6 +89,16 @@ public class HBallController implements ActionListener
 				}	
 			}
 		});
+		
+		NetworkQueueController.Instance().setPackageReceivedListener(new PackageReceivedEventListener()
+		{	
+			@Override
+			public void handlePositionsPackage(PositionsPackage pack) 
+			{
+				// TODO UPDATE POSITIONS
+			}
+		});
+		
 		_view.addKeyListener(InputController.Instance());
 	}
 	

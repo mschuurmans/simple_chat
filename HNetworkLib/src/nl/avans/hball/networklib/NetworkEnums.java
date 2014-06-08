@@ -2,9 +2,11 @@ package nl.avans.hball.networklib;
 
 public class NetworkEnums 
 {
-	public static enum PacketTypes
+	public static enum MoveDirections
 	{
-		ping,
-		join
+		Up,
+		Down,
+		Left,
+		Right;
 	}
 }
