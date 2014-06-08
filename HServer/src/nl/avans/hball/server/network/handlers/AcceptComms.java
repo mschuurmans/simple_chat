@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import nl.avans.hball.server.models.HBallModel;
+
 public class AcceptComms implements Runnable
 {
 	private int _port = 12346;
@@ -22,17 +24,20 @@ public class AcceptComms implements Runnable
 	{
 		try 
 		{
+			HBallModel model = ObjectHandler.Instance().getModel();
+			
 			ServerSocket listener = new ServerSocket(_port);
 			Socket server;
 			System.out.println("Server started waiting for incomming connections.");
 			while(_running)
 			{
+				int clientId = model.getPlayerList().size();
 				System.out.println("Waiting for a new incomming connection");
 				
 				server = listener.accept();
 				System.out.println("Incomming connection - starting new thread");
 				
-				CommHandler h = new CommHandler(server);
+				CommHandler h = new CommHandler(clientId, server);
 				Thread t = new Thread(h);
 				t.start();
 				

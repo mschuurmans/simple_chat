@@ -14,7 +14,9 @@ public class Main
 		HBallModel model = new HBallModel();
 		ObjectHandler objectHandler = ObjectHandler.Instance();
 		HBallController controller = new HBallController(model);
+		
 		objectHandler.setModel(model);
+		objectHandler.set_controller(controller);
 		
 
 //		HBallController controller = new HBallController(model);

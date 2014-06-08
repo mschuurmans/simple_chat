@@ -25,46 +25,20 @@ public class HBallController implements ActionListener
 		_timerModelUpdate = new Timer(60, _model);
 		_timerModelUpdate.start();
 		
-//		_controllerTimer = new Timer(10, this);
-//		_controllerTimer.start();
+		_controllerTimer = new Timer(10, this);
+		_controllerTimer.start();
 		
-//		System.out.println("method call");
-//		InputController.Instance().setInputTriggeredEventListener(new InputTriggeredEventListener()
-//		{	
-//			@Override
-//			public void buttonPressed(char key) 
-//			{
-//				if(key == ' ')
-//				{
-//					_model.ballKick(HBallModel.PLAYERTESTID);
-//				}
-//				
-//				//check and set the keys
-//				char[] chars = "wasd".toCharArray();
-//				for(int i = 0; i < 4; i++)
-//				{
-//					if(chars[i] == key)
-//					{
-//						wasdStatus[i] = true;
-//					}
-//				}
-//			}
-//
-//			@Override
-//			public void buttonReleased(char key) 
-//			{
-//				char[] chars = "wasd".toCharArray();
-//				
-//				for(int i = 0; i < 4; i++)
-//				{
-//					if(chars[i] == key)
-//					{
-//						wasdStatus[i] = false;
-//					}
-//				}	
-//			}
-//		});
-//		_view.addKeyListener(InputController.Instance());
+	}
+	
+	public void enableWasdBool(char c)
+	{
+		switch(c)
+		{
+		case 'w': wasdStatus[0] = true; break;
+		case 'a': wasdStatus[1] = true; break;
+		case 's': wasdStatus[2] = true; break;
+		case 'd': wasdStatus[3] = true; break;
+		}
 	}
 	
 	private void driveModel()
@@ -114,5 +88,6 @@ public class HBallController implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		driveModel();
+		wasdStatus = new boolean[4];
 	}
 }
