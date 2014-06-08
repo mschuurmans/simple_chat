@@ -45,14 +45,6 @@ public class HBallModel implements ActionListener, Cloneable
 		init();
 	}
 	
-	public HBallModel clone(){  
-	    try{  
-	        return (HBallModel)super.clone();  
-	    }catch(Exception e){ 
-	        return null; 
-	    }
-	}
-	
 	private void init()
 	{
 		_myWorld = new World(new Vector2f(0.0f, 0.0f), 10, new BruteCollisionStrategy());

@@ -16,9 +16,8 @@ import net.phys2d.math.ROVector2f;
 import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.shapes.Box;
-import nl.avans.hball.controllers.InputController;
-import nl.avans.hball.entities.PlayerPosition;
 import nl.avans.hball.models.HBallModel;
+import nl.avans.hball.networklib.PlayerPosition;
 
 public class HBallScreen extends JPanel implements ActionListener 
 {

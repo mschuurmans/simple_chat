@@ -7,7 +7,8 @@ public class ObjectHandler
 	
 	private static ObjectHandler _instance = null;
 	
-	private static HBallModel _model;
+	private HBallModel _model;
+	private HBallController _controller;
 
 	public static ObjectHandler Instance()
 	{
@@ -15,6 +16,11 @@ public class ObjectHandler
 			_instance = new ObjectHandler();
 
 		return _instance;
+	}
+	
+	public ObjectHandler()
+	{
+		
 	}
 	
 	public void setModel(HBallModel model)
@@ -25,6 +31,14 @@ public class ObjectHandler
 	public HBallModel getModel()
 	{
 		return this._model;
+	}
+
+	public HBallController get_controller() {
+		return _controller;
+	}
+
+	public void set_controller(HBallController _controller) {
+		this._controller = _controller;
 	}
 
 }

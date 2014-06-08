@@ -3,11 +3,12 @@ package nl.avans.hball.server.network.handlers;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
+import nl.avans.hball.networklib.EnumsNetwork.MoveDirections;
 import nl.avans.hball.networklib.HPackage;
 import nl.avans.hball.networklib.MovePackage;
-import nl.avans.hball.networklib.NetworkEnums.MoveDirections;
 import nl.avans.hball.networklib.PingPackage;
 import nl.avans.hball.networklib.PlayerPosition;
 import nl.avans.hball.networklib.PositionsPackage;
@@ -52,19 +53,21 @@ public class CommHandler implements Runnable
 							{
 								controller.enableWasdBool('w');
 							}
-							else if(((MovePackage) packIn).getDirection() == MoveDirections.Right);
+							else if(((MovePackage) packIn).getDirection() == MoveDirections.Right)
 							{
 								controller.enableWasdBool('d');
 							}
-							else if(((MovePackage) packIn).getDirection() == MoveDirections.Down);
+							else if(((MovePackage) packIn).getDirection() == MoveDirections.Down)
 							{
 								controller.enableWasdBool('s');
 							}
-							else if(((MovePackage) packIn).getDirection() == MoveDirections.Left);
+							else if(((MovePackage) packIn).getDirection() == MoveDirections.Left)
 							{
 								controller.enableWasdBool('a');
 							}
+							
 						}
+
 						System.out.println("INCOMMING PACKAGE: " + packIn);
 					}
 					

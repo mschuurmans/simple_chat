@@ -11,12 +11,15 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		ObjectHandler objectHandler = new ObjectHandler();
+		ObjectHandler objectHandler = ObjectHandler.Instance();
 		
 		HBallModel model = new HBallModel();
 		HBallScreen view = new HBallScreen(model);
-		objectHandler.setModel(model);
 		HBallController controller = new HBallController(model, view);
+
+		objectHandler.setModel(model);
+		objectHandler.set_controller(controller);
+		
 
 		NetworkController network = new NetworkController("127.0.0.1", 12346);
 		new BaseFrame(view);

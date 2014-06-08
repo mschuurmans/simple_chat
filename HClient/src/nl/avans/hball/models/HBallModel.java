@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.phys2d.math.ROVector2f;
 import net.phys2d.math.Vector2f;
-import nl.avans.hball.entities.PlayerPosition;
+import nl.avans.hball.networklib.PlayerPosition;
 
 public class HBallModel implements ActionListener
 {
@@ -15,6 +15,8 @@ public class HBallModel implements ActionListener
 	
 	public static final float PLAYERDIAMETER = 30f;
 	public static final float BALLDIAMETER = 15f;
+	
+	private int _clientId;
 	
 	private List<PlayerPosition> _playerPositionList = new ArrayList<PlayerPosition>();
 	
@@ -62,5 +64,13 @@ public class HBallModel implements ActionListener
 	public void actionPerformed(ActionEvent arg0)
 	{
 		update();
+	}
+
+	public int getClientId() {
+		return _clientId;
+	}
+
+	public void setClientId(int _clientId) {
+		this._clientId = _clientId;
 	}
 }

@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import nl.avans.hball.models.HBallModel;
 import nl.avans.hball.networklib.HPackage;
 import nl.avans.hball.networklib.PingPackage;
 import nl.avans.hball.networklib.PositionsPackage;
@@ -51,6 +52,9 @@ public class NetworkController
 			System.out.println("RUN IN CONNECTION CALLED");
 			try
 			{
+				HBallModel model = ObjectHandler.Instance().getModel();
+				HBallController controller = ObjectHandler.Instance().get_controller();
+				
 				while(this._running)
 				{
 					ObjectOutputStream out = new ObjectOutputStream(_socket.getOutputStream());
@@ -72,6 +76,7 @@ public class NetworkController
 					
 					if(packIn instanceof PositionsPackage)
 					{
+						model.setClientId( ((PositionsPackage) packIn).get_myId() );
 						PositionsPackage pp = (PositionsPackage)packIn;
 						NetworkQueueController.Instance().callPositionsPackageReceived(pp);
 					}

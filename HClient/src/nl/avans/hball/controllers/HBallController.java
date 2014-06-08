@@ -2,14 +2,17 @@ package nl.avans.hball.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Timer;
 
 import nl.avans.hball.events.InputTriggeredEventListener;
 import nl.avans.hball.events.PackageReceivedEventListener;
 import nl.avans.hball.models.HBallModel;
+import nl.avans.hball.networklib.EnumsNetwork.MoveDirections;
 import nl.avans.hball.networklib.MovePackage;
-import nl.avans.hball.networklib.NetworkEnums.MoveDirections;
+import nl.avans.hball.networklib.PlayerPosition;
 import nl.avans.hball.networklib.PositionsPackage;
 import nl.avans.hball.networklib.SendKickPackage;
 import nl.avans.hball.views.HBallScreen;
@@ -42,26 +45,28 @@ public class HBallController implements ActionListener
 			@Override
 			public void buttonPressed(char key) 
 			{
+				int id = _model.getClientId();
+				
 				System.out.println("Key: " + key);
 				if(key == ' ')
 				{
-					NetworkQueueController.Instance().add(new SendKickPackage());
+					NetworkQueueController.Instance().add( new SendKickPackage(id) );
 				}
 				else if(key == 'w')
 				{
-					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Up));
+					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Up));
 				}
 				else if(key == 'a')
 				{
-					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Left));
+					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Left));
 				}
 				else if(key == 's')
 				{
-					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Down));
+					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Down));
 				}
 				else if(key == 'd')
 				{
-					NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Right));
+					NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Right));
 				}
 				
 				//check and set the keys
@@ -95,7 +100,12 @@ public class HBallController implements ActionListener
 			@Override
 			public void handlePositionsPackage(PositionsPackage pack) 
 			{
-				// TODO UPDATE POSITIONS
+				PlayerPosition ballPos = pack.get_ballPosition();
+				_model.setBallPosition(ballPos.getX(), ballPos.getY() );
+				
+				List<PlayerPosition> playerPosList = pack.get_playerPositionList();
+				_model.setPlayerPositionList(playerPosList);
+				
 			}
 		});
 		
