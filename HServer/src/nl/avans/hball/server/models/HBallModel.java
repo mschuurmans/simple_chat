@@ -23,7 +23,8 @@ public class HBallModel implements ActionListener, Cloneable
 	
 	public static final float PLAYERDIAMETER = 30f;
 	public static final float BALLDIAMETER = 15f;
-	public static final float BALLMASS = 1000f;
+	public static final float BALLMASS = 500f;
+	public static final float BALLRESTITUTION = 0.4f;
 	
 	public static final int PLAYERTESTID = 1;
 	
@@ -50,10 +51,6 @@ public class HBallModel implements ActionListener, Cloneable
 		_myWorld.clear();
 		_myWorld.setGravity(0f, 0f);
 		
-		_floor = new StaticBody("Ground", new Box(1400f, 1f));
-		_floor.setPosition(0, 600);
-		_floor.setRestitution(0.8f);
-		
 		for (int i = 0; i < AMOUNTOFWALLS; i++)
 		{
 			_wall[i] = new StaticBody("wall", new Box(FIELDWIDTH, FIELDHEIGHT));
@@ -67,7 +64,6 @@ public class HBallModel implements ActionListener, Cloneable
 		{
 			_myWorld.add(_wall[i]);
 		}
-		_myWorld.add(_floor);
 		_myWorld.add(_ball);
 	}
 	
@@ -77,10 +73,46 @@ public class HBallModel implements ActionListener, Cloneable
 		
 		ball = new Body("ball", new Circle(BALLDIAMETER), BALLMASS);
 		ball.setPosition(674, 374);
-		ball.setRestitution(0.9f);
+		ball.setRestitution(BALLRESTITUTION);
 		ball.setDamping(50f);
 		
 		return ball;
+	}
+	
+	private boolean ballIsInField()
+	{
+		float ballX = _ball.getPosition().getX();
+		float ballY = _ball.getPosition().getY();
+		
+		if(ballX < 100 || ballX > 1250 || ballY < 100 || ballY > 650)
+			return false;
+		
+		else
+			return true;
+	}
+	
+	private boolean ballTouchesLeftGoal()
+	{
+		float ballX = _ball.getPosition().getX();
+		float ballY = _ball.getPosition().getY();
+		
+		if(ballX < 110 && ballY < 450 && ballY > 300)
+			return true;
+		
+		else
+			return false;					
+	}
+	
+	private boolean ballTouchesRightGoal()
+	{
+		float ballX = _ball.getPosition().getX();
+		float ballY = _ball.getPosition().getY();
+		
+		if(ballX > 1250 - 10 && ballY < 450 && ballY > 300)
+			return true;
+		
+		else
+			return false;					
 	}
 	
 	public void addNewPlayer()
@@ -88,7 +120,9 @@ public class HBallModel implements ActionListener, Cloneable
 		Body player = new Body("new Player", new Circle(PLAYERDIAMETER), 1000f);
 		int id = _playerList.size();
 		player.setUserData(id);
-		player.setPosition(1200 - 100*id, 380);
+		float newX = (float) (Math.random() * FIELDWIDTH + 100);
+		float newY = (float) (Math.random() * FIELDHEIGHT + 100);
+		player.setPosition(newX, newY);
 		player.setDamping(200f);
 		
 		_playerList.add(player);
@@ -100,6 +134,19 @@ public class HBallModel implements ActionListener, Cloneable
 		for (int i = 0; i < 1; i++)
 		{
 			_myWorld.step();
+		}
+		
+		if(!ballIsInField())
+		{
+			_ball = createBall();
+			_myWorld.add(_ball);
+		}
+		
+		if(ballTouchesLeftGoal() || ballTouchesRightGoal())
+		{
+			_myWorld.remove(_ball);
+			_ball = createBall();
+			_myWorld.add(_ball);
 		}
 	}
 	
@@ -146,7 +193,6 @@ public class HBallModel implements ActionListener, Cloneable
 	
 	public void playerHasJoined()
 	{
-		_ball.adjustVelocity(new Vector2f(2000f, 2000f));
 	}
 	
 	public void movePlayer(int playerId, Vector2f delta)

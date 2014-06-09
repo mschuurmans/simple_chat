@@ -2,6 +2,7 @@ package nl.avans.hball.views;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -72,8 +73,36 @@ public class HBallScreen extends JPanel implements ActionListener
 		Graphics2D g = (Graphics2D)g1;
 		
 		int x, y, diameter;
-		
+	
+		g.setColor(Color.white);
+
 		g.drawString("Player ID: " + _model.getClientId(), 30, 30);
+		
+		Font font = new Font("Arial", Font.PLAIN, 20) ;
+		g.setFont(font);
+		g.drawString("Use the WASD keys to move and the spacebar to kick!", BaseFrame.SCREENWIDTH/2 - 480/2, 50);
+		
+		//draw the field
+		//outline
+		g.setStroke(new BasicStroke(4f));
+		g.drawRect(100, 100, 1150, 550);
+		//center dot
+		g.fillOval(660, 360, 30, 30);
+		//center circle
+		g.drawOval(575, 275, 200, 200);
+		//centerLine
+		g.drawLine(675, 100, 675, 650);
+		//goal areas
+		g.drawRect(100, 200, 150, 350);
+		g.drawRect(1100, 200, 150, 350);
+		//goals
+		g.drawRect(100 - 50, 300, 50, 150);
+		g.fillOval(100 - 5, 300 -5, 10, 10);
+		g.fillOval(100 - 5, 450 -5, 10, 10);
+		g.drawRect(1250, 300, 50, 150);
+		g.fillOval(1250 - 5, 300 -5, 10, 10);
+		g.fillOval(1250 - 5, 450 -5, 10, 10);
+		
 		
 		for (PlayerPosition v : _playerPositions)
 		{
@@ -91,13 +120,17 @@ public class HBallScreen extends JPanel implements ActionListener
 			
 			g.fillOval(x, y, diameter, diameter);
 			
+			font = new Font("Arial", Font.PLAIN, 35) ;
+			g.setFont(font);
+			
+			g.setColor(Color.white);
+			g.drawString("" + v.getId(), x + 20, y + 40);
+			
 			if(i == _model.getClientId() && _model.getKicking() )
 			{
 				g.setStroke(new BasicStroke(3));
 				g.setColor(Color.white);
 			}
-
-			g.drawOval(x, y, diameter, diameter);
 			
 			g.setStroke(new BasicStroke(1));
 			g.setColor(Color.black);
@@ -108,6 +141,7 @@ public class HBallScreen extends JPanel implements ActionListener
 		x = (int) _ballPosition.getX() -diameter/2;
 		y = (int) _ballPosition.getY() -diameter/2;
 		
-		g.drawOval(x, y, diameter, diameter);
+		g.setColor(Color.gray.brighter());
+		g.fillOval(x, y, diameter, diameter);
 	}
 }
