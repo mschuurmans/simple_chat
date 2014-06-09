@@ -78,7 +78,18 @@ public class HBallScreen extends JPanel implements ActionListener
 		for (PlayerPosition v : _playerPositions)
 		{
 			int i = _playerPositions.indexOf(v);
+						
+			diameter = (int) HBallModel.PLAYERDIAMETER;
+			diameter *= 2;
+			x = (int) v.getX() -diameter/2;
+			y = (int) v.getY() -diameter/2;
 			
+			if(_model.getClientId() == v.getId())
+				g.setColor(Color.red);
+			else
+				g.setColor(Color.blue);
+			
+			g.fillOval(x, y, diameter, diameter);
 			
 			if(i == _model.getClientId() && _model.getKicking() )
 			{
@@ -86,10 +97,6 @@ public class HBallScreen extends JPanel implements ActionListener
 				g.setColor(Color.white);
 			}
 
-			diameter = (int) HBallModel.PLAYERDIAMETER;
-			diameter *= 2;
-			x = (int) v.getX() -diameter/2;
-			y = (int) v.getY() -diameter/2;
 			g.drawOval(x, y, diameter, diameter);
 			
 			g.setStroke(new BasicStroke(1));

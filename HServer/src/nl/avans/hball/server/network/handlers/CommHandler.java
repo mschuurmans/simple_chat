@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
+import net.phys2d.math.Vector2f;
 import nl.avans.hball.networklib.EnumsNetwork.MoveDirections;
 import nl.avans.hball.networklib.HPackage;
 import nl.avans.hball.networklib.MovePackage;
@@ -51,11 +52,11 @@ public class CommHandler implements Runnable
 					{
 						if(packIn instanceof SendKickPackage)
 						{
-							model.ballKick( ((SendKickPackage) packIn).get_id() );
+							model.ballKick(_clientId);
 						}
 						if(packIn instanceof MovePackage)
 						{
-							int id = ((MovePackage) packIn).getId();
+							int id = _clientId;
 							
 							if(((MovePackage) packIn).getDirection() == MoveDirections.Up)
 							{
@@ -96,6 +97,9 @@ public class CommHandler implements Runnable
 					e.printStackTrace();
 				}
 			}
+			
+			model.clearPlayerFromScreen(_clientId);
+			
 		}
 		
 }

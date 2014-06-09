@@ -36,8 +36,6 @@ public class NetworkQueueController
 	public void add(HPackage pack)
 	{
 		_packages.add(pack);
-
-		System.out.println("dadded size: " + _packages.size());
 	}
 	
 	public boolean available()

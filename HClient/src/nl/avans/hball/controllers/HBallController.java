@@ -2,7 +2,6 @@ package nl.avans.hball.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Timer;
@@ -47,10 +46,9 @@ public class HBallController implements ActionListener
 			{
 				int id = _model.getClientId();
 				
-				System.out.println("Key: " + key);
 				if(key == ' ')
 				{
-					NetworkQueueController.Instance().add( new SendKickPackage(id) );
+					NetworkQueueController.Instance().add( new SendKickPackage() );
 					_model.setKicking(true);
 				}
 				
@@ -69,7 +67,6 @@ public class HBallController implements ActionListener
 			public void buttonReleased(char key) 
 			{
 				char[] chars = "wasd".toCharArray();
-				
 				for(int i = 0; i < 4; i++)
 				{
 					if(chars[i] == key)
@@ -103,22 +100,22 @@ public class HBallController implements ActionListener
 		
 		if (wasdStatus[0])
 		{
-			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Up));
+			NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Up));
 		}
 		
 		if (wasdStatus[1])
 		{
-			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Left));
+			NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Left));
 		}
 		
 		if (wasdStatus[2])
 		{
-			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Down));
+			NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Down));
 		}
 		
 		if (wasdStatus[3])
 		{
-			NetworkQueueController.Instance().add(new MovePackage(id, MoveDirections.Right));
+			NetworkQueueController.Instance().add(new MovePackage(MoveDirections.Right));
 		}	
 	}
 	

@@ -9,12 +9,10 @@ public class MovePackage extends HPackage implements Serializable
 	private static final long serialVersionUID = 3238065144411468469L;
 
 	private MoveDirections _dir;
-	private int _id;
 	
-	public MovePackage(int id, MoveDirections dir)
+	public MovePackage(MoveDirections dir)
 	{
 		_dir = dir;
-		_id = id;
 	}
 	
 	public MoveDirections getDirection()
@@ -22,8 +20,4 @@ public class MovePackage extends HPackage implements Serializable
 		return _dir;
 	}
 	
-	public int getId()
-	{
-		return _id;
-	}
 }

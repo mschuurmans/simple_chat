@@ -125,7 +125,10 @@ public class HBallModel implements ActionListener, Cloneable
 		ROVector2f pos = _ball.getPosition();
 		return new PlayerPosition(-1, pos.getX(), pos.getY());
 	}
-	
+	public void clearPlayerFromScreen(int id)
+	{
+		_playerList.get(id).setPosition(-200, 0);
+	}
 	public Body getBall()
 	{
 		return this._ball;
