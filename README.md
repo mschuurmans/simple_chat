@@ -1,4 +1,4 @@
-simple_chat
+simple_hball
 ===========
 
-simple chat application
+simplem hball client/server for socket testing
